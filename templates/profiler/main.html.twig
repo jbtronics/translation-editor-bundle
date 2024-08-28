@@ -1,0 +1,81 @@
+{% extends '@WebProfiler/Collector/translation.html.twig' %}
+
+{% block panel %}
+
+    <h2>Translation editor</h2>
+
+    {{ parent() }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+    {% include "@JbtronicsTranslationEditor/profiler/scripts.js" %}
+    </script>
+
+{% endblock %}
+
+{% macro render_table(messages, is_fallback) %}
+    <table>
+        <thead>
+        <tr>
+            <th>Locale</th>
+            {% if is_fallback %}
+                <th>Fallback locale</th>
+            {% endif %}
+            <th>Domain</th>
+            <th>Times used</th>
+            <th>Message ID</th>
+            <th>Message Preview</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for message in messages %}
+            <tr>
+                <td class="font-normal text-small nowrap">{{ message.locale }}</td>
+                {% if is_fallback %}
+                    <td class="font-normal text-small nowrap">{{ message.fallbackLocale|default('-') }}</td>
+                {% endif %}
+                <td class="font-normal text-small text-bold nowrap">{{ message.domain }}</td>
+                <td class="font-normal text-small nowrap">{{ message.count }}</td>
+                <td>
+                    <span class="{{ message.id|length < 64 ? 'nowrap' }}">{{ message.id }}</span>
+
+                    {% if message.transChoiceNumber is not null %}
+                        <small class="newline">(pluralization is used)</small>
+                    {% endif %}
+
+                    {% if message.parameters|length > 0 %}
+                        <button class="btn-link newline text-small sf-toggle" data-toggle-selector="#parameters-{{ loop.index }}" data-toggle-alt-content="Hide parameters">Show parameters</button>
+
+                        <div id="parameters-{{ loop.index }}" class="hidden">
+                            {% for parameters in message.parameters %}
+                                {{ profiler_dump(parameters, maxDepth=1) }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </td>
+                <td data-message-block="{{ message.id }}"><span data-message-span="{{ message.id }}">{{ message.translation }}</span></td>
+                <td><button class="btn btn-sm" onclick="showEditField('{{ message.id }}');">Edit</button></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}
+
+
+{# We need this (seemingly redundant) blocks, to ensure our macro is used, and not the original one #}
+{% block defined_messages %}
+    {{ _self.render_table(messages_defined) }}
+{% endblock %}
+
+ {% block fallback_messages %}
+     {{ _self.render_table(messages_fallback, true) }}
+ {% endblock %}
+
+{% block missing_messages %}
+    {{ _self.render_table(messages_missing) }}
+{% endblock %}

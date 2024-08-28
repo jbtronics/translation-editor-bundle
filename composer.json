@@ -1,0 +1,53 @@
+{
+  "name": "jbtronics/translation-editor-bundle",
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "description": "A symfony bundle to allow editing translations in the symfony profiler",
+  "keywords": ["translations", "profiler", "symfony", "symfony-bundle"],
+  "autoload": {
+    "psr-4": {
+      "Jbtronics\\TranslationEditorBundle\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Jbtronics\\TranslationEditorBundle\\Tests\\TestApplication\\": "tests/TestApplication/src/",
+      "Jbtronics\\TranslationEditorBundle\\Tests\\": "tests/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Jan Böhmer",
+      "email": "mail@jan-boehmer.de"
+    }
+  ],
+  "suggest": {
+    "symfony/twig-bridge": "Allows to access settings in twig templates",
+    "doctrine/doctrine-bundle": "To use the doctrine ORM storage"
+  },
+  "require": {
+    "php": "^8.1",
+    "ext-json": "*",
+    "symfony/framework-bundle": "^6.4|^7.0",
+    "symfony/translation-contracts": "^2.5|^3.0",
+    "symfony/translation": "^7.0|^6.4",
+    "symfony/deprecation-contracts": "^3.4",
+    "symfony/web-profiler-bundle": "^7.0|^6.4",
+    "symfony/twig-bundle": "^7.0|^6.4"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest",
+    "symfony/phpunit-bridge": "^6.4|^7.0",
+    "phpunit/phpunit": "^9.5",
+    "symfony/security-csrf": "^7.0|^6.4",
+    "phpstan/phpstan": "^1.10",
+    "ekino/phpstan-banned-code": "^1.0",
+    "phpstan/phpstan-strict-rules": "^1.5",
+    "phpstan/extension-installer": "^1.3"
+  },
+  "config": {
+    "allow-plugins": {
+      "phpstan/extension-installer": true
+    }
+  }
+}
