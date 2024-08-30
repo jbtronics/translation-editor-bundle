@@ -24,7 +24,7 @@ return static function (ContainerConfigurator $container) {
 
     $services->set('jbtronics.translations_editor.message_editor', \Jbtronics\TranslationEditorBundle\Service\MessageEditor::class)
         ->args([
-            '$translator' => service('translator'),
+            '$translationReader' => service('translation.reader'),
             '$translationWriter' => service('translation.writer'),
             '$translationPath' => param('translator.default_path'),
         ]);

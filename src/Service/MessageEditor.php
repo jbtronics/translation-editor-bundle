@@ -7,17 +7,26 @@ namespace Jbtronics\TranslationEditorBundle\Service;
 
 use Symfony\Component\Translation\Catalogue\TargetOperation;
 use Symfony\Component\Translation\MessageCatalogue;
+use Symfony\Component\Translation\Reader\TranslationReaderInterface;
 use Symfony\Component\Translation\TranslatorBagInterface;
 use Symfony\Component\Translation\Writer\TranslationWriterInterface;
 
 class MessageEditor
 {
     public function __construct(
-        private readonly TranslatorBagInterface $translator,
         private readonly TranslationWriterInterface $translationWriter,
+        private readonly TranslationReaderInterface $translationReader,
         private readonly string $translationPath,
     )
     {
+    }
+
+    private function loadCurrentTranslations(string $locale): MessageCatalogue
+    {
+        $messageCatalogue = new MessageCatalogue($locale);
+        $this->translationReader->read($this->translationPath, $messageCatalogue);
+
+        return $messageCatalogue;
     }
 
     /**
@@ -48,8 +57,9 @@ class MessageEditor
 
     public function editMessage(string $messageId, string $messageLocale, string $messageDomain, string $message): void
     {
-        //Get the catalogue for the message locale
-        $catalogue = $this->translator->getCatalogue($messageLocale);
+        //Get the catalogue for the message locale (we cannot use normal translator service, as the catalogue is
+        //cached there and contains no metadata. Also it contains the bundle strings, we do not need)
+        $catalogue = $this->loadCurrentTranslations($messageLocale);
 
         //We only want a subcatalogue for the domain we are editing
         $domainCatalogue = $this->getDomainOnlyCatalogue($catalogue, $messageDomain);
