@@ -12,6 +12,7 @@
     {{ parent() }}
 
     <script>
+        window.JBTRONICS_TRANSLATION_EDITOR_EDIT_URL = '{{ path('jbtronics_translation_editor_edit') }}';
     {% include "@JbtronicsTranslationEditor/profiler/scripts.js" %}
     </script>
 
@@ -59,7 +60,7 @@
                     {% endif %}
                 </td>
                 <td data-message-block="{{ message.id }}"><span data-message-span="{{ message.id }}">{{ message.translation }}</span></td>
-                <td><button class="btn btn-sm" onclick="showEditField('{{ message.id }}');">Edit</button></td>
+                <td><button class="btn btn-sm" onclick="showEditField('{{ message.id }}', '{{ message.locale }}', '{{ message.domain }}');">Edit</button></td>
             </tr>
         {% endfor %}
         </tbody>

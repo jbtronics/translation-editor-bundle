@@ -1,4 +1,4 @@
-function showEditField(messageId) {
+function showEditField(messageId, messageLocale, messageDomain) {
     //Find the td block belonging to the messageId
     const td = document.querySelector('td[data-message-block="' + messageId + '"]');
 
@@ -33,7 +33,7 @@ function showEditField(messageId) {
         //Make the message span visible again
         messageSpan.style.display = 'inline';
         td.removeChild(td.querySelector('div[data-container="' + messageId + '"]'));
-        submitEditField(messageId, newMessage);
+        submitEditField(messageId, messageLocale, messageDomain, newMessage);
     });
 
 
@@ -47,7 +47,7 @@ function showEditField(messageId) {
     td.appendChild(container);
 }
 
-function submitEditField(messageId, message) {
+function submitEditField(messageId, messageLocale, messageDomain, message) {
     const td = document.querySelector('td[data-message-block="' + messageId + '"]');
 
     //Make the td light blue, to indicate that the message is being submitted
@@ -62,7 +62,7 @@ function submitEditField(messageId, message) {
     }
 
     //Make a POST request to the server to update the message
-    fetch('/profiler/update-message', {
+    fetch(window.JBTRONICS_TRANSLATION_EDITOR_EDIT_URL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -70,6 +70,8 @@ function submitEditField(messageId, message) {
         body: JSON.stringify({
             messageId: messageId,
             message: message,
+            messageDomain: messageDomain,
+            messageLocale: messageLocale,
         }),
     }).then((response) => {
         if (!response.ok) {
