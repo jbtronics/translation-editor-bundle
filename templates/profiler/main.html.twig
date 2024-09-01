@@ -63,7 +63,25 @@
                         </div>
                     {% endif %}
                 </td>
-                <td data-message-block="{{ message.id }}"><span data-message-span="{{ message.id }}">{{ message.translation }}</span></td>
+                <td data-message-block="{{ message.id }}">
+                    {# Retrieve current translation (this might be different to the version at time of request) #}
+                    {% set current_translation = message.id|trans({}, message.domain, message.locale)  %}
+                    <span data-message-span="{{ message.id }}"
+                          {% if current_translation != message.translation %}
+                              title="Current translation"
+                          {% endif %}
+                    >{{ current_translation }}</span>
+
+                    {# If current translation differs from the one in the request, then show old version #}
+                    {% if current_translation != message.translation %}
+                        <button class="btn-link newline text-small sf-toggle" data-toggle-selector="#original-trans-{{ loop.index }}"
+                                style="font-size: 10px !important;"
+                                data-toggle-alt-content="Hide original translation at time of request">Show original translation at time of request</button>
+                        <div id="original-trans-{{ loop.index }}" class="hidden">
+                            <span title="Translation at time of request">{{ message.translation }}</span><br>
+                        </div>
+                    {% endif %}
+                </td>
                 <td><button class="btn btn-sm" onclick="showEditField('{{ message.id }}', '{{ message.locale }}', '{{ message.domain }}');">Edit</button></td>
             </tr>
         {% endfor %}
