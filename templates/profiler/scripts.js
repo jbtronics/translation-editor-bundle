@@ -36,12 +36,26 @@ function showEditField(messageId, messageLocale, messageDomain) {
         submitEditField(messageId, messageLocale, messageDomain, newMessage);
     });
 
+    //Add an cancel button
+    const cancelButton = document.createElement('button');
+    cancelButton.textContent = 'Cancel';
+    cancelButton.classList.add('btn', 'btn-sm');
+    cancelButton.style.marginLeft = '5px';
+
+    //Add an event listener to the cancel button
+    cancelButton.addEventListener('click', function() {
+        //Make the message span visible again
+        messageSpan.style.display = 'inline';
+        td.removeChild(td.querySelector('div[data-container="' + messageId + '"]'));
+    });
+
 
     //Create a fresh div container, which contains all our elements
     const container = document.createElement('div');
     container.dataset.container = messageId;
     container.appendChild(textarea);
     container.appendChild(saveButton);
+    container.appendChild(cancelButton);
 
     //Append the textarea to the td block
     td.appendChild(container);
