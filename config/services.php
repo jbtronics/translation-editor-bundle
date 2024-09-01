@@ -35,6 +35,7 @@ return static function (ContainerConfigurator $container) {
         ->tag('controller.service_arguments')
         ->args([
             '$editor' => service('jbtronics.translations_editor.message_editor'),
+            '$debugEnabled' => param('kernel.debug'),
         ])
     ;
 

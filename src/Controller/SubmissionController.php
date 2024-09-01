@@ -14,12 +14,18 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class SubmissionController
 {
     public function __construct(
-        private readonly MessageEditor $editor
+        private readonly MessageEditor $editor,
+        private readonly bool $debugEnabled,
     ) {
     }
 
     public function editMessage(Request $request): Response
     {
+        //If we are not in debug mode, we should not allow editing
+        if (!$this->debugEnabled) {
+            throw new HttpException(403, 'Editing translations is only allowed in debug mode!');
+        }
+
         $data = $request->toArray();
 
         //Get the message from the request
