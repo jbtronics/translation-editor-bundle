@@ -2,9 +2,13 @@
 
 {% block panel %}
 
-    <h2>Translation editor</h2>
-
     {{ parent() }}
+
+    <h3>Translation Editor</h3>
+    <p>
+        If you find any issues with the translation editor, open an issue in the
+        <a href="https://github.com/jbtronics/translation-editor-bundle" target="_blank">GitHub repository</a>.
+    </p>
 
 {% endblock %}
 
@@ -13,7 +17,7 @@
 
     <script>
         window.JBTRONICS_TRANSLATION_EDITOR_EDIT_URL = '{{ path('jbtronics_translation_editor_edit') }}';
-    {% include "@JbtronicsTranslationEditor/profiler/scripts.js" %}
+        {% include "@JbtronicsTranslationEditor/profiler/scripts.js" %}
     </script>
 
 {% endblock %}
