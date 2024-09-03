@@ -48,9 +48,30 @@ when@dev:
 ## Configuration
 
 If you do not use the standard paths for your translation files, or not the XLF format, you have to configure the bundle
-to generate the right files.
+to generate the right files. If you just use the standard paths and XLF format, the defaults should be fine for you, and
+you can skip this step and you do not need to create a configuration file.
 
-TODO
+Otherwise create a new file in your `config/packages` directory (e.g. `config/packages/jbtronics_translation_editor.yaml`)
+and configure the options you need (here the default values are shown):
+
+```yaml
+# config/packages/jbtronics_translation_editor.yaml
+
+jbtronics_translation_editor:
+
+  # The path where the translation files are stored (normally %kernel.project_dir%/translations)
+  translations_path: "%translator.default_path%"
+  
+  # The format in which the translation files should be outputted
+  format: yaml
+  
+  # The version of the XLIFF format to use
+  xliff_version: 2.0
+  
+  # Any additional options that should be passed to the translation writer. This depends on the format you use.
+  writer_options:
+    #as_tree: true
+```
 
 ## Usage
 
