@@ -5,13 +5,15 @@ declare(strict_types=1);
 
 namespace Jbtronics\TranslationEditorBundle\Service;
 
-use Symfony\Component\Translation\Catalogue\TargetOperation;
 use Symfony\Component\Translation\MessageCatalogue;
 use Symfony\Component\Translation\Reader\TranslationReaderInterface;
-use Symfony\Component\Translation\TranslatorBagInterface;
 use Symfony\Component\Translation\Writer\TranslationWriterInterface;
 
-class MessageEditor
+/**
+ * This services handles the editing of translation messages using the configured options
+ * @internal
+ */
+final class MessageEditor
 {
     public function __construct(
         private readonly TranslationWriterInterface $translationWriter,
@@ -24,6 +26,12 @@ class MessageEditor
     {
     }
 
+    /**
+     * Load the current translations for the given locale. This is always directly loaded from the files, so that
+     * we do not have to deal with the cached translator service.
+     * @param  string  $locale
+     * @return MessageCatalogue
+     */
     private function loadCurrentTranslations(string $locale): MessageCatalogue
     {
         $messageCatalogue = new MessageCatalogue($locale);
@@ -33,9 +41,9 @@ class MessageEditor
     }
 
     /**
-     * Create a subcatalogue only containing the given domain
+     * Create a sub catalogue only containing the given domain
      * @param  MessageCatalogue  $catalogue
-     * @param  string  $messageDomain
+     * @param  string  $messageDomain The domain to extract
      * @return MessageCatalogue
      */
     private function getDomainOnlyCatalogue(MessageCatalogue $catalogue, string $messageDomain): MessageCatalogue
@@ -58,7 +66,15 @@ class MessageEditor
         return $domainCatalogue;
     }
 
-    public function editMessage(string $messageId, string $messageLocale, string $messageDomain, string $message): void
+    /**
+     * Edit the given message to new value. If it is not existing yet, it will be created.
+     * @param  string  $messageId The ID of the message to edit
+     * @param  string  $messageLocale The locale of the message
+     * @param  string  $messageDomain The domain of the message
+     * @param  string  $newMessage The new content of the message
+     * @return void
+     */
+    public function editMessage(string $messageId, string $messageLocale, string $messageDomain, string $newMessage): void
     {
         //Get the catalogue for the message locale (we cannot use normal translator service, as the catalogue is
         //cached there and contains no metadata. Also it contains the bundle strings, we do not need)
@@ -68,7 +84,7 @@ class MessageEditor
         $domainCatalogue = $this->getDomainOnlyCatalogue($catalogue, $messageDomain);
 
         //Apply our message change
-        $domainCatalogue->set($messageId, $message, $messageDomain);
+        $domainCatalogue->set($messageId, $newMessage, $messageDomain);
 
         $writeOptions = [
             'path' => $this->translationPath,
