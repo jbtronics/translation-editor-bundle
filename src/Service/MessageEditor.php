@@ -90,7 +90,7 @@ final class MessageEditor
             'path' => $this->translationPath,
         ];
 
-        if (in_array($this->format, ['xlf', 'xliff'])) {
+        if (in_array($this->format, ['xlf', 'xliff'], true)) {
             $writeOptions['xliff_version'] = $this->xliffVersion;
         }
 

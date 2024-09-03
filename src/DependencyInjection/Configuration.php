@@ -16,7 +16,7 @@ final class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('jbtronics_translation_editor');
         $rootNode = $treeBuilder->getRootNode();
 
-        $rootNode
+        $rootNode //@phpstan-ignore-line
             ->children()
 
             ->scalarNode('translations_path')->defaultValue('%translator.default_path%')->end()
