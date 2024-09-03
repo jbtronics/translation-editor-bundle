@@ -8,6 +8,8 @@ This bundle is inspired by the [php-translation/symfony-bundle](https://github.c
 offers a similar feature, but has more dependencies and is more complex to use. This bundle provides a simpler and more
 modern alternative to this, which supports the latest Symfony versions and slightly faster.
 
+![Animated Showcase](./docs/showcase.gif)
+
 ## Requirements
 
 * PHP 8.1 or higher
