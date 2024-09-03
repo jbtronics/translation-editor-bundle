@@ -26,7 +26,10 @@ return static function (ContainerConfigurator $container) {
         ->args([
             '$translationReader' => service('translation.reader'),
             '$translationWriter' => service('translation.writer'),
-            '$translationPath' => param('translator.default_path'),
+            '$translationPath' => param('jbtronics.translation_editor.translations_path'),
+            '$format' => param('jbtronics.translation_editor.format'),
+            '$xliffVersion' => param('jbtronics.translation_editor.xliff_version'),
+            '$writerOptions' => param('jbtronics.translation_editor.writer_options'),
         ]);
 
     //Register the controller

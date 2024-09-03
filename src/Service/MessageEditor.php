@@ -17,6 +17,9 @@ class MessageEditor
         private readonly TranslationWriterInterface $translationWriter,
         private readonly TranslationReaderInterface $translationReader,
         private readonly string $translationPath,
+        private readonly string $format = "xlf",
+        private readonly string $xliffVersion = "2.0",
+        private readonly array $writerOptions = []
     )
     {
     }
@@ -69,10 +72,16 @@ class MessageEditor
 
         $writeOptions = [
             'path' => $this->translationPath,
-            'xliff_version' => '2.0',
         ];
 
+        if (in_array($this->format, ['xlf', 'xliff'])) {
+            $writeOptions['xliff_version'] = $this->xliffVersion;
+        }
+
+        //Apply the writer options array
+        $writeOptions = array_merge($writeOptions, $this->writerOptions);
+
         //Write the catalogue
-        $this->translationWriter->write($domainCatalogue, 'xlf', $writeOptions);
+        $this->translationWriter->write($domainCatalogue, $this->format, $writeOptions);
     }
 }
