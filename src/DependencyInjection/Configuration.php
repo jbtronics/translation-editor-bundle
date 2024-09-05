@@ -22,6 +22,7 @@ final class Configuration implements ConfigurationInterface
             ->scalarNode('translations_path')->defaultValue('%translator.default_path%')->end()
             ->scalarNode('format')->defaultValue('xlf')->end()
             ->scalarNode('xliff_version')->defaultValue('2.0')->end()
+            ->scalarNode('use_intl')->defaultValue('false')->end()
             ->arrayNode('writer_options')->scalarPrototype()->defaultNull()->end()
 
             ->end();
