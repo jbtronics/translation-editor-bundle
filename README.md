@@ -75,6 +75,9 @@ jbtronics_translation_editor:
   # Any additional options that should be passed to the translation writer. This depends on the format you use.
   writer_options:
     #as_tree: true
+
+  # Use Intl message format
+  use_intl: false
 ```
 
 ## Usage
