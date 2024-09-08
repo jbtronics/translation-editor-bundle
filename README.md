@@ -33,7 +33,7 @@ If you are using Symfony Flex, the bundle will be automatically enabled. If not,
 ```php
 return [
     // ...
-    Jbtronics\SettingsBundle\JbtronicsSettingsBundle::class => ['dev' => true],
+    Jbtronics\TranslationEditorBundle\JbtronicsTranslationEditorBundle::class => ['dev' => true],
 ];
 ```
 Please note that this bundle should only be enabled in the `dev` environment.
