@@ -65,16 +65,19 @@ jbtronics_translation_editor:
 
   # The path where the translation files are stored (normally %kernel.project_dir%/translations)
   translations_path: "%translator.default_path%"
-  
+
   # The format in which the translation files should be outputted
   format: yaml
-  
+
   # The version of the XLIFF format to use
   xliff_version: 2.0
-  
+
   # Any additional options that should be passed to the translation writer. This depends on the format you use.
   writer_options:
     #as_tree: true
+
+  # Use Intl message format
+  use_intl: false
 ```
 
 ## Usage
@@ -93,7 +96,7 @@ edit the translations, with all consequences. As translations are not necessaril
 to inject malicious code as an XSS attack.
 
 However, this bundle, similar to the Symfony profiler itself, is only intended for development and debugging purposes and
-should only run in a dedicated development environment, where only trusted users have access (and could modify the code 
+should only run in a dedicated development environment, where only trusted users have access (and could modify the code
 directly anyway). Therefore, the security risk should be minimal in the intended use case.
 
 This bundle enforces the `dev` environment, so it should not be possible to use it in a production environment. Anyway,

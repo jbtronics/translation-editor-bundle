@@ -26,5 +26,6 @@ class JbtronicsTranslationEditorExtension extends Extension
         $container->setParameter('jbtronics.translation_editor.format', $config['format']);
         $container->setParameter('jbtronics.translation_editor.xliff_version', $config['xliff_version']);
         $container->setParameter('jbtronics.translation_editor.writer_options', $config['writer_options']);
+        $container->setParameter('jbtronics.translation_editor.use_intl', $config['use_intl']);
     }
 }
