@@ -77,7 +77,7 @@ jbtronics_translation_editor:
     #as_tree: true
 
   # Use Intl message format
-  use_intl: false
+  use_intl_icu_format: false
 ```
 
 ## Usage
