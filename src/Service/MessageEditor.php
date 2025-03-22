@@ -21,7 +21,8 @@ final class MessageEditor
         private readonly string $translationPath,
         private readonly string $format = "xlf",
         private readonly string $xliffVersion = "2.0",
-        private readonly array $writerOptions = []
+        private readonly array $writerOptions = [],
+        private readonly bool $useIntl = false
     )
     {
     }
@@ -79,6 +80,10 @@ final class MessageEditor
         //Get the catalogue for the message locale (we cannot use normal translator service, as the catalogue is
         //cached there and contains no metadata. Also it contains the bundle strings, we do not need)
         $catalogue = $this->loadCurrentTranslations($messageLocale);
+
+        if ($this->useIntl) {
+            $messageDomain = sprintf('%s+intl-icu', $messageDomain);
+        }
 
         //We only want a subcatalogue for the domain we are editing
         $domainCatalogue = $this->getDomainOnlyCatalogue($catalogue, $messageDomain);
