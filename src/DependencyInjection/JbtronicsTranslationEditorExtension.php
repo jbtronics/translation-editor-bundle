@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 class JbtronicsTranslationEditorExtension extends Extension
 {
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../../config'));
         $loader->load('services.php');
