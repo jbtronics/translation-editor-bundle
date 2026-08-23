@@ -1,0 +1,50 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - '*'
+      - "!l10n_*" # Dont test localization branches
+  pull_request:
+    branches:
+      - '*'
+      - "!l10n_*"
+
+jobs:
+  phpunit:
+    name: PHPUnit (PHP ${{ matrix.php-version }})
+    runs-on: ubuntu-22.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: [ '8.1', '8.2', '8.3', '8.4' ]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: none
+          ini-values: xdebug.max_nesting_level=1000
+          extensions: mbstring, intl, gd, xsl, gmp, bcmath, :php-psr
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ matrix.php-version }}-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-${{ matrix.php-version }}-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run PHPUnit
+        run: php vendor/bin/phpunit
