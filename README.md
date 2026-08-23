@@ -72,6 +72,9 @@ jbtronics_translation_editor:
   # The version of the XLIFF format to use
   xliff_version: 2.0
 
+  # The source locale of your translations (used as the srcLang attribute when writing XLIFF files)
+  default_locale: "%kernel.default_locale%"
+
   # Any additional options that should be passed to the translation writer. This depends on the format you use.
   writer_options:
     #as_tree: true

@@ -23,6 +23,7 @@ final class MessageEditor
         private readonly string $xliffVersion = "2.0",
         private readonly array $writerOptions = [],
         private readonly bool $useIntl = false
+        private readonly string $defaultLocale = 'en',
     )
     {
     }
@@ -129,6 +130,11 @@ final class MessageEditor
 
         if (in_array($this->format, ['xlf', 'xliff'], true)) {
             $writeOptions['xliff_version'] = $this->xliffVersion;
+
+            //Explicitly set the source language, otherwise the writer falls back to \Locale::getDefault(), which is
+            //not reliably set (e.g. it is never set to the app locale on the CLI, unlike during a HTTP request),
+            //and can result in a bogus srcLang (e.g. "en-US-POSIX") being written to the file.
+            $writeOptions['default_locale'] = $this->defaultLocale;
         }
 
         //Apply the writer options array

@@ -31,6 +31,7 @@ return static function (ContainerConfigurator $container) {
             '$xliffVersion' => param('jbtronics.translation_editor.xliff_version'),
             '$writerOptions' => param('jbtronics.translation_editor.writer_options'),
             '$useIntl' => param('jbtronics.translation_editor.use_intl_icu_format'),
+            '$defaultLocale' => param('jbtronics.translation_editor.default_locale'),
         ]);
 
     //Register the controller
