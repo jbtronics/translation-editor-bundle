@@ -91,6 +91,38 @@ final class MessageEditor
         //Apply our message change
         $domainCatalogue->set($messageId, $newMessage, $messageDomain);
 
+        $this->writeCatalogue($domainCatalogue);
+    }
+
+    /**
+     * Reload and rewrite the message catalogue for the given domain and locale, without changing any message.
+     * This is useful to update the auto generated message IDs (e.g. after the writer or its configuration changed),
+     * as the writer regenerates them for every message it writes, whether it was changed or not.
+     * @param  string  $messageLocale The locale of the catalogue to update
+     * @param  string  $messageDomain The domain of the catalogue to update
+     * @return void
+     */
+    public function updateMessageIds(string $messageLocale, string $messageDomain): void
+    {
+        $catalogue = $this->loadCurrentTranslations($messageLocale);
+
+        if ($this->useIntl) {
+            $messageDomain = sprintf('%s+intl-icu', $messageDomain);
+        }
+
+        //We only want a subcatalogue for the domain we are editing
+        $domainCatalogue = $this->getDomainOnlyCatalogue($catalogue, $messageDomain);
+
+        $this->writeCatalogue($domainCatalogue);
+    }
+
+    /**
+     * Write the given catalogue to the translation files, using the configured writer options.
+     * @param  MessageCatalogue  $catalogue
+     * @return void
+     */
+    private function writeCatalogue(MessageCatalogue $catalogue): void
+    {
         $writeOptions = [
             'path' => $this->translationPath,
         ];
@@ -103,6 +135,6 @@ final class MessageEditor
         $writeOptions = array_merge($writeOptions, $this->writerOptions);
 
         //Write the catalogue
-        $this->translationWriter->write($domainCatalogue, $this->format, $writeOptions);
+        $this->translationWriter->write($catalogue, $this->format, $writeOptions);
     }
 }

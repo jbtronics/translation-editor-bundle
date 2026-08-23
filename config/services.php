@@ -43,4 +43,15 @@ return static function (ContainerConfigurator $container) {
         ])
     ;
 
+    //Register the console command, only if symfony/console is installed, as it is an optional dependency
+    if (class_exists(\Symfony\Component\Console\Command\Command::class)) {
+        $services->set(\Jbtronics\TranslationEditorBundle\Command\TouchCatalogCommand::class)
+            ->tag('console.command')
+            ->args([
+                '$messageEditor' => service('jbtronics.translations_editor.message_editor'),
+                '$enabledLocales' => param('kernel.enabled_locales'),
+            ])
+        ;
+    }
+
 };

@@ -89,6 +89,39 @@ button to open a editor for the message and click save to save the changes.
 After submission the field is colored blue, while the changes are saved. If the changes were saved sucessfully, the field
 will turn green for a short time, otherwise red if an error occurred.
 
+### Console command
+
+Symfony's translation writer regenerates the (auto generated) message IDs of a catalogue every time it writes a file, not
+just for the message that was actually changed. If your writer or its configuration changes (e.g. you switch the ID
+generation strategy), the IDs already on disk can get out of sync until the catalogue is written again.
+
+To refresh a catalogue without changing any of its messages, this bundle provides a console command that just reloads and
+rewrites it:
+
+```bash
+php bin/console translation:touch-catalog <domain> <locale>
+
+# e.g.
+php bin/console translation:touch-catalog messages en
+```
+
+If your application defines its locales via the `framework.enabled_locales` config option, you can use the `--all-locales`
+(`-a`) option to touch the given domain for all of them at once, instead of passing a single locale:
+
+```bash
+php bin/console translation:touch-catalog messages --all-locales
+```
+
+This requires `symfony/console` to be installed. As it is only an optional dependency of this bundle, install it yourself
+if you have not already (it is normally pulled in transitively by `symfony/framework-bundle`):
+
+```bash
+composer require --dev symfony/console
+```
+
+If `symfony/console` is not available, the command is simply not registered and the rest of the bundle keeps working as
+usual.
+
 ## Security
 
 The endpoint for the translation editor is not protected. Anybody who can access the web application and the profiler can
