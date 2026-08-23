@@ -22,7 +22,7 @@ final class MessageEditor
         private readonly string $format = "xlf",
         private readonly string $xliffVersion = "2.0",
         private readonly array $writerOptions = [],
-        private readonly bool $useIntl = false
+        private readonly bool $useIntl = false,
         private readonly string $defaultLocale = 'en',
     )
     {
