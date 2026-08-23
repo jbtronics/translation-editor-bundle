@@ -23,9 +23,6 @@ parameters:
 
     checkFunctionNameCase: false
 
-    checkAlwaysTrueInstanceof: false
-    checkAlwaysTrueCheckTypeFunctionCall: false
-    checkAlwaysTrueStrictComparison: false
     reportAlwaysTrueInLastCondition: false
 
     reportMaybesInPropertyPhpDocTypes: false
@@ -36,12 +33,10 @@ parameters:
     	booleansInConditions: false
     	uselessCast: false
     	requireParentConstructorCall: true
-    	disallowedConstructs: false
     	overwriteVariablesWithLoop: false
     	closureUsesThis: false
     	matchingInheritedMethodNames: true
     	numericOperandsInArithmeticOperators: true
-    	strictCalls: true
     	switchConditionsMatchingType: false
     	noVariableVariables: false
 
