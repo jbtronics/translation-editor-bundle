@@ -37,7 +37,8 @@
     "ekino/phpstan-banned-code": "^v3.2.0",
     "phpstan/phpstan-strict-rules": "^2.0.0",
     "phpstan/extension-installer": "^1.4.3",
-    "symfony/console": "^6.4|^7.0|^8.0"
+    "symfony/console": "^6.4|^7.0|^8.0",
+    "phpunit/phpunit": "^10.5"
   },
   "suggest": {
     "symfony/console": "To use the jbtronics:translation-editor:update-message-ids console command"
